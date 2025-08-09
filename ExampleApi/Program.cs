@@ -10,7 +10,8 @@ builder.Services.AddHttpClient<JokesService>((sp, client) =>
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
-app.MapScalarApiReference();
+app.MapScalarApiReference(o => o.Theme = ScalarTheme.BluePlanet);
+
 app.MapOpenApi();
 app.UseHttpsRedirection();
 
