@@ -2,7 +2,11 @@ using ExampleApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpClient<JokesService>();
+builder.Services.AddHttpClient<JokesService>((sp, client) =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    client.BaseAddress = new Uri(config["JokesApiUrl"] ?? throw new NotImplementedException("JokesApiUrl"));
+});
 
 var app = builder.Build();
 
