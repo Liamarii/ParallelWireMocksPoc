@@ -7,6 +7,7 @@ builder.Services.AddHttpClient<JokesService>((sp, client) =>
     var config = sp.GetRequiredService<IConfiguration>();
     client.BaseAddress = new Uri(config["JokesApiUrl"] ?? throw new NotImplementedException("JokesApiUrl"));
 });
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
