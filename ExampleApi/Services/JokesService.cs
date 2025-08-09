@@ -1,12 +1,11 @@
 ﻿using ExampleApi.Models;
 
-namespace ExampleApi.Services
+namespace ExampleApi.Services;
+
+public sealed class JokesService(HttpClient httpClient)
 {
-    public sealed class JokesService(HttpClient httpClient)
+    public async Task<Joke?> GetJokeAsync()
     {
-        public async Task<Joke?> GetJokeAsync()
-        {
-            return await httpClient.GetFromJsonAsync<Joke>("/random_joke");
-        }
+        return await httpClient.GetFromJsonAsync<Joke>("/random_joke");
     }
 }
