@@ -7,8 +7,8 @@ namespace Tests
         [Test]
         public void CollectionCompareTest()
         {
-            var collectionOne = new List<int>[1, 2, 3, 5];
-            var collectionTwo = new List<int>[1, 2, 3, 5];
+            List<int> collectionOne = [1, 2, 3, 5];
+            List<int> collectionTwo = [1, 2, 3, 5];
             CollectionAssert.AreEquivalent(collectionOne, collectionTwo);
         }
 
@@ -30,6 +30,16 @@ namespace Tests
                 Assert.That(timeOne, Is.EqualTo(timeTwo).Within(3).Seconds);
                 Assert.That(timeOne, Is.Not.EqualTo(timeTwo).Within(1).Seconds);
             });
+        }
+
+        [Test]
+        public void UsingMessages()
+        {
+            List<int> collection = [1, 2, 3, 5];
+            if (collection is [.., _, < 6])
+            {
+                Assert.Pass(message: "pattern matching is weird");
+            }
         }
     }
 }
