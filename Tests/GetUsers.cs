@@ -14,11 +14,11 @@ namespace Tests
         public async Task Test1()
         {
             var httpClient = _factory.CreateClient();
-            var response = await httpClient.GetAsync("/users");
-            var users = await response.Content.ReadFromJsonAsync<IEnumerable<User>>();
+            var response = await httpClient.GetAsync("/joke");
 
             response.EnsureSuccessStatusCode();
-            Assert.That(users?.Count(), Is.EqualTo(3));
+            var joke = response.Content.ReadFromJsonAsync<Joke>();
+            Assert.That(joke, Is.Not.Null);
         }
 
         [OneTimeTearDown]

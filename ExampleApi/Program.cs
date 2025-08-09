@@ -1,21 +1,23 @@
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient<JokesApiClient>();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/users", () =>
-{
-    return new List<User>()
-        {
-            new("Anish", "Giri"),
-            new("Bob","Fischer"),
-            new("Carl","Magnuson")
-        };
-});
+app.MapGet("/joke", async (JokesApiClient jokesApi) => await jokesApi.GetJokeAsync());
 
 app.Run();
 
+public record Joke(string setup, string punchline);
 
-public record User(string forename, string surname);
+public class JokesApiClient(HttpClient httpClient)
+{
+    public async Task<Joke?> GetJokeAsync()
+    {
+        return await httpClient.GetFromJsonAsync<Joke>("https://official-joke-api.appspot.com/random_joke");
+    }
+}
