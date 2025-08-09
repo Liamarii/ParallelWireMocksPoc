@@ -18,7 +18,7 @@ internal class GetJokeWithoutWireMock
         var response = await httpClient.GetAsync("/joke");
 
         response.EnsureSuccessStatusCode();
-        var joke = response.Content.ReadFromJsonAsync<Joke>();
+        var joke = await response.Content.ReadFromJsonAsync<Joke>();
         Assert.That(joke, Is.Not.Null);
     }
 

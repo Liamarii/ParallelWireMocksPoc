@@ -6,7 +6,7 @@ namespace ExampleApi.Services
     {
         public async Task<Joke?> GetJokeAsync()
         {
-            return await httpClient.GetFromJsonAsync<Joke>("https://official-joke-api.appspot.com/random_joke");
+            return await httpClient.GetFromJsonAsync<Joke>("/random_joke");
         }
     }
 }
