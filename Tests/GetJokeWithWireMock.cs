@@ -5,6 +5,7 @@ using WireMock.ResponseBuilders;
 
 namespace Tests;
 
+[Parallelizable]
 internal class GetJokeWithWireMock
 {
     private WireMockManager _wireMockManager;
@@ -26,6 +27,7 @@ internal class GetJokeWithWireMock
     [Test]
     public async Task GetJokeFromMockedApi()
     {
+        Thread.Sleep(TimeSpan.FromSeconds(3));
         var response = await _wireMockManager.Client.GetAsync("/joke");
         var joke = await response.Content.ReadFromJsonAsync<Joke>();
         Assert.Multiple(() =>

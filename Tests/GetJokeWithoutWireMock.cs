@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 
 namespace Tests;
 
+[Parallelizable]
 internal class GetJokeWithoutWireMock
 {
     private WebApplicationFactory<Program> _factory = null!;
@@ -14,6 +15,7 @@ internal class GetJokeWithoutWireMock
     [Test]
     public async Task GetJokeFromRealApi()
     {
+        Thread.Sleep(TimeSpan.FromSeconds(3));
         var httpClient = _factory.CreateClient();
         var response = await httpClient.GetAsync("/joke");
 
