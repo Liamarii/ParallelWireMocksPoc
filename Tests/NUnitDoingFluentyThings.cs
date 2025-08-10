@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-internal class NUnitDoingFluentyThings
+internal sealed class NUnitDoingFluentyThings
 {
     [Test]
     public void CollectionCompareTest()

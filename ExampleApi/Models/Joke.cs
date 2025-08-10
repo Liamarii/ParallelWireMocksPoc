@@ -1,3 +1,3 @@
 ﻿namespace ExampleApi.Models;
 
-public record Joke(string Setup, string Punchline);
+public sealed record Joke(string Setup, string Punchline);

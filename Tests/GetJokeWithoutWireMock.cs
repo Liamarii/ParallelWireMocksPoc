@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 namespace Tests;
 
 [Parallelizable]
-internal class GetJokeWithoutWireMock
+internal sealed class GetJokeWithoutWireMock
 {
     private WebApplicationFactory<Program> _factory = null!;
 

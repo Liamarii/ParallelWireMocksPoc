@@ -4,7 +4,7 @@ using WireMock.Server;
 
 namespace Tests;
 
-internal class WireMockManager : IDisposable
+internal sealed class WireMockManager : IDisposable
 {
     private readonly WireMockServer _wireMock;
     public WebApplicationFactory<Program> Factory;

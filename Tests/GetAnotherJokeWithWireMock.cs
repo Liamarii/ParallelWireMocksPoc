@@ -6,7 +6,7 @@ using WireMock.ResponseBuilders;
 namespace Tests;
 
 [Parallelizable]
-internal class GetAnotherJokeWithWireMock
+internal sealed class GetAnotherJokeWithWireMock
 {
     private WireMockManager _wireMockManager;
     private const string _setup = "How do you organize a space party?";

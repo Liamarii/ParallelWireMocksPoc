@@ -6,12 +6,11 @@ using WireMock.ResponseBuilders;
 namespace Tests;
 
 [Parallelizable]
-internal class GetJokeWithWireMock
+internal sealed class GetJokeWithWireMock
 {
     private WireMockManager _wireMockManager;
     private const string _setup = "Why are pirates called pirates?";
     private const string _punchline = "Because they arrr!";
-
 
     [OneTimeSetUp]
     public void OneTimeSetup()
@@ -41,7 +40,4 @@ internal class GetJokeWithWireMock
             Assert.That(joke?.Punchline, Is.EqualTo(_punchline));
         });
     }
-
-    [OneTimeTearDown]
-    public void OneTimeTearDown() => _wireMockManager.Dispose();
 }
