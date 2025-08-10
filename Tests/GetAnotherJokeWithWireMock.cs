@@ -9,6 +9,9 @@ namespace Tests;
 internal class GetAnotherJokeWithWireMock
 {
     private WireMockManager _wireMockManager;
+    private const string _setup = "How do you organize a space party?";
+    private const string _punchline = "Planet!";
+
 
     [OneTimeSetUp]
     public void OneTimeSetup()
@@ -20,7 +23,7 @@ internal class GetAnotherJokeWithWireMock
                .UsingGet())
                .RespondWith(Response.Create()
                .WithStatusCode(200)
-               .WithBody("{\"setup\":\"How do you organize a space party?\",\"punchline\":\"Planet!\"}"));
+               .WithBody($"{{\"setup\":\"{_setup}\",\"punchline\":\"{_punchline}\"}}"));
         });
     }
 
@@ -29,16 +32,13 @@ internal class GetAnotherJokeWithWireMock
     {
         Thread.Sleep(TimeSpan.FromSeconds(3));
         var response = await _wireMockManager.Client.GetAsync("/joke");
-
-        response.EnsureSuccessStatusCode();
         var joke = await response.Content.ReadFromJsonAsync<Joke>();
+
         Assert.Multiple(() =>
         {
-            Assert.That(joke?.Setup, Is.EqualTo("How do you organize a space party?"));
-            Assert.That(joke?.Punchline, Is.EqualTo("Planet!"));
+            response.EnsureSuccessStatusCode();
+            Assert.That(joke?.Setup, Is.EqualTo(_setup));
+            Assert.That(joke?.Punchline, Is.EqualTo(_punchline));
         });
     }
-
-    [OneTimeTearDown]
-    public void OneTimeTearDown() => _wireMockManager.Dispose();
 }

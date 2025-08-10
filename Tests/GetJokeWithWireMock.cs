@@ -9,6 +9,9 @@ namespace Tests;
 internal class GetJokeWithWireMock
 {
     private WireMockManager _wireMockManager;
+    private const string _setup = "Why are pirates called pirates?";
+    private const string _punchline = "Because they arrr!";
+
 
     [OneTimeSetUp]
     public void OneTimeSetup()
@@ -20,7 +23,7 @@ internal class GetJokeWithWireMock
                .UsingGet())
                .RespondWith(Response.Create()
                .WithStatusCode(200)
-               .WithBody("{\"setup\":\"Why are pirates called pirates?\",\"punchline\":\"Because they arrr!\"}"));
+               .WithBody($"{{\"setup\":\"{_setup}\",\"punchline\":\"{_punchline}\"}}"));
         });
     }
 
@@ -30,11 +33,12 @@ internal class GetJokeWithWireMock
         Thread.Sleep(TimeSpan.FromSeconds(3));
         var response = await _wireMockManager.Client.GetAsync("/joke");
         var joke = await response.Content.ReadFromJsonAsync<Joke>();
+        
         Assert.Multiple(() =>
         {
             response.EnsureSuccessStatusCode();
-            Assert.That(joke?.Setup, Is.EqualTo("Why are pirates called pirates?"));
-            Assert.That(joke?.Punchline, Is.EqualTo("Because they arrr!"));
+            Assert.That(joke?.Setup, Is.EqualTo(_setup));
+            Assert.That(joke?.Punchline, Is.EqualTo(_punchline));
         });
     }
 
